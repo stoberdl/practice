@@ -1,26 +1,26 @@
-// Last updated: 12/17/2025, 4:07:06 PM
+// Last updated: 12/18/2025, 1:00:12 PM
 1class Solution {
 2    public int longestConsecutive(int[] nums) {
 3        if (nums.length <= 0) {
 4            return 0;
 5        }
-6        Set<Integer> numsSet = new HashSet<>();
-7        for (int num : nums) {
-8            numsSet.add(num);
-9        }
-10        int longestStreak = 1;
-11        int streak = 1;
-12        for (Integer num : numsSet) {
-13            if (!numsSet.contains(num - 1)) {
-14                streak = 1;
-15                while (numsSet.contains(num + streak)) {
-16                    streak++;
-17                }
-18                longestStreak = Math.max(streak, longestStreak);
-19            }
-20
-21        }
-22        return longestStreak;
-23    }
-24
+6        //hash set/map of values for quick lookup, for loop through nums, check if start of sequence,
+7        //then loop throug that sequence for highest streak, skip for loops of non sequence starters, does not contain n -1
+8        int currStreak = 1;
+9        int highStreak = 1;
+10        Set<Integer> numSet = new HashSet<>();
+11        for (int num : nums) {
+12            numSet.add(num);
+13        }
+14        for (Integer num : numSet) {
+15            if (!numSet.contains(num - 1)) {
+16                while (numSet.contains(num + currStreak)) {
+17                    currStreak++;
+18                }
+19                highStreak = Math.max(highStreak, currStreak);
+20            }
+21            currStreak = 1;
+22        }
+23        return highStreak;
+24    }
 25}
